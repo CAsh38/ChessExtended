@@ -1,5 +1,5 @@
 {
   "FPS" : "120",
   "ScreenSize" : "1920x1080",
-  "WindowMode" : "Fullscreen"
+  "WindowMode" : "Windowed"
 }

@@ -21,12 +21,30 @@
     <ClCompile Include="src\Foundations.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Managers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WindowsSpecific.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SceneManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Definitions.h">
+    <ClInclude Include="src\include\Managers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Foundations.h">
+    <ClInclude Include="src\include\Foundations.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\WindowsSpecific.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\SceneManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Defines.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

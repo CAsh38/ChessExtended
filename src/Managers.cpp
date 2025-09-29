@@ -1,14 +1,8 @@
-#pragma once
-#include <json/json.h>
-#include <bits/stdc++.h>
-#include "raylib.h"
-#include <filesystem>
-#define WINDOW_NAME "ChessExtended"
-#define BASE_WINDOW_SIZE_X 50
-#define BASE_WINDOW_SIZE_y 35
+#include "include/Defines.h"
+#include "include/Managers.h"
 
 void StartUpManager()
-{	
+{
 	int result = MakeDirectory("./configs"); // returns 0 if directory already exists
 	std::ifstream checkFile("./configs/general.json", std::ios::binary);
 	bool verdict = (!checkFile.good() || (checkFile.peek() == std::ifstream::traits_type::eof()));
@@ -28,7 +22,7 @@ void StartUpManager()
 		builder["indentation"] = "  ";
 
 		std::ofstream file("./configs/general.json", std::ios::out | std::ios::trunc);
-		Json::StreamWriter *jsonwriter = builder.newStreamWriter();
+		Json::StreamWriter* jsonwriter = builder.newStreamWriter();
 		jsonwriter->write(outRoot, &file);
 		outRoot.clear();
 		file.close();
@@ -59,4 +53,3 @@ void InitializeWindow()
 	else ToggleFullscreen();
 	root.clear();
 }
-

@@ -1,17 +1,28 @@
-#include "Definitions.h"
+#include "include/Managers.h"
+#include "include/WindowsSpecific.h"
+#include "include/SceneManager.h"
+
+double TPS;
 
 int main(void)
 {
+    HideConsoleIfNotDebugging();
     InitializeWindow();
+    SceneManager scenemanager;
+    Scene MainMenu = scenemanager.GetMainMenu(), ActualScene;
+    ActualScene = MainMenu;
+    clock_t start; double end;
 
     while (!WindowShouldClose())
     {
+        start = clock();
         BeginDrawing();
-        ClearBackground(BLACK);
-        DrawRectangle(100, 100, 200, 200, RED);
-        DrawFPS(10, 10);
-        /*DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);*/
+            DrawSceneOnScreen(ActualScene);
         EndDrawing();
+        RespondToPlayerInput(ActualScene);
+        end = (double)(clock() - start) / CLOCKS_PER_SEC;
+        TPS = 1 / end;
+        ParseConsoleCommand();
     }
     CloseWindow();
     return 0;
