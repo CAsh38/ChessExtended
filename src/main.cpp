@@ -11,6 +11,18 @@ std::vector<std::string> UserDebugInfo, ConsoleDebugInfo;
 int ScreenHeight, ScreenWidth;
 std::vector<double> TPSArray;
 
+static double getAverageTPS(int cycles)
+{
+    if (TPSArray.size() <= cycles) TPSArray.push_back(TPS);
+    else if (TPSArray.size() == cycles + 1)
+    {
+        TPSArray.erase(TPSArray.begin());
+        TPSArray.push_back(TPS);
+    }
+    else TPSArray.erase(TPSArray.begin(), TPSArray.end() - cycles);
+    return std::reduce(TPSArray.begin(), TPSArray.end()) / TPSArray.size();
+}
+
 static Info GetConsoleDebugInfo()
 {
     static int cycles = 0;
@@ -21,18 +33,12 @@ static Info GetConsoleDebugInfo()
         {
             if (text.contains("_A"))
             {
-                if(command_received) cycles = atoi(strrchr(text.c_str(), '_') + 1);
-                if (TPSArray.size() <= cycles) TPSArray.push_back(TPS);
-                else
-                {
-                    TPSArray.erase(TPSArray.begin());
-                    TPSArray.push_back(TPS);
-                }
-                info.push_back(std::reduce(TPSArray.begin(), TPSArray.end()) / TPSArray.size());
+                if (command_received) cycles = atoi(strrchr(text.c_str(), '_') + 1);
+                info.push_back(getAverageTPS(cycles));
             }
             else info.push_back(TPS);
         }
-        else if (text == "cursor")
+        if (text == "cursor")
         {
             std::string text = std::to_string(GetMouseX()) + "|" + std::to_string(GetMouseY());
             info.push_back(text);

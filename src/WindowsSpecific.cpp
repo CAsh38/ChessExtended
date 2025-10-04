@@ -43,7 +43,9 @@ static void ShowCommand(char* next_token)
 			if (strstr(ConsoleDebugInfo.at(i).c_str(), object) != NULL)
 				ConsoleDebugInfo.erase(ConsoleDebugInfo.begin() + i);
 		}
-		if(ok) ConsoleDebugInfo.push_back(text);
+		if (ok) ConsoleDebugInfo.push_back(text);
+		else if (CmpStrings(object, "TPS"))
+			TPSArray.erase(TPSArray.begin(), TPSArray.end());
 		/*ConsoleDebugInfo.erase(std::remove(ConsoleDebugInfo.begin(), ConsoleDebugInfo.end(), object),
 			ConsoleDebugInfo.end());*/
 	}
@@ -70,7 +72,7 @@ void ParseConsoleCommand()
 		token = strtok_s(data, BASE_DELIMITATOR, &next_token);
 		if (CmpStrings(token, "show"))
 			ShowCommand(next_token);
-		if (CmpStrings(token, "exit"))
+		else if (CmpStrings(token, "exit"))
 			EXIT = 1;
 	}
 	return;
