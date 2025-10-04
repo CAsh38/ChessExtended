@@ -1,6 +1,12 @@
 #pragma once
 #include <string>
+#include <list>
+#include <variant>
+#include <vector>
 #include "raylib.h"
+
+typedef std::vector<std::variant<int, float, double, char, std::string, char*>> Info;
+extern bool EXIT;
 
 class Board
 {
@@ -48,9 +54,6 @@ public:
 	int (*Function)();
 	Button(TextBox text, int (*function)(), int binding)
 		: Text(std::move(text)), Function(function), Binding(binding) {}
-	/*Button(TextBox text, int (*function)())
-	{
-		Text = std::move(text);
-		Function = function;
-	}*/
 };
+
+int ExitApp();

@@ -1,12 +1,10 @@
 #pragma once
 #include "Foundations.h"
 #include "Defines.h"
-#include <list>
-#include "raylib.h"
-#include <variant>
 #include <iostream>
 
 using SceneObject = std::variant<TextBox, Button>;
+
 typedef struct SceneWrap
 {
 	std::list <SceneObject> Storage;
@@ -14,6 +12,8 @@ typedef struct SceneWrap
 } SceneWrap;
 
 using Scene = std::list<struct SceneWrap>;
+
+using Object2D = std::variant<Rectangle>;
 
 class SceneManager
 {
