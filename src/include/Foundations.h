@@ -1,39 +1,19 @@
 #pragma once
-#include <string>
-#include <list>
 #include <variant>
 #include <vector>
+#include <string>
 #include "raylib.h"
 
 typedef std::vector<std::variant<int, float, double, char, std::string, char*>> Info;
+
 extern bool EXIT;
-
-class Board
-{
-public:
-	__int32 Length, Height;
-	std::string Topology, * modifications = nullptr;
-
-	Board(int L, int H, std::string topology, std::string* mods)
-	{
-		Length = L, Height = H;
-		Topology = topology;
-		modifications = mods;
-	}
-};
-
-class ClasicSquareBoard : public Board
-{
-public:
-	using Board::Board;
-
-};
 
 class TextBox
 {
 public:
 	std::string Text, Font;
 	Rectangle Box;
+	char rounded;
 	int Font_Size;
 	float opacity;
 	TextBox(std::string text, std::string font, float X, float Y, float Width, float Height, int font_size)
@@ -43,6 +23,13 @@ public:
 		Text = text; Font = font;
 		Font_Size = font_size;
 		opacity = 100;
+		rounded = 0;
+	}
+	void DrawBorders(float lineThickness, Color color)
+	{
+		Rectangle improptu = Box;
+		Box.y += Box.height;
+		if (!rounded) DrawRectangleLinesEx(Box, lineThickness, color);
 	}
 };
 
@@ -57,3 +44,4 @@ public:
 };
 
 int ExitApp();
+int PlayTheFuckingGame();

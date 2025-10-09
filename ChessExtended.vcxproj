@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -19,19 +19,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Foundations.cpp" />
     <ClCompile Include="src\Managers.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
-    <ClCompile Include="src\Utilities.cpp" />
     <ClCompile Include="src\WindowsSpecific.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\include\Board.h" />
     <ClInclude Include="src\include\Defines.h" />
+    <ClInclude Include="src\include\LinkedLists.h" />
     <ClInclude Include="src\include\Managers.h" />
     <ClInclude Include="src\include\Foundations.h" />
+    <ClInclude Include="src\include\Pieces.h" />
     <ClInclude Include="src\include\SceneManager.h" />
-    <ClInclude Include="src\include\Utilities.h" />
     <ClInclude Include="src\include\WindowsSpecific.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

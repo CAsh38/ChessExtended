@@ -1,15 +1,16 @@
 #include "include/WindowsSpecific.h"
 #include "include/SceneManager.h"
 #include "include/Managers.h"
-#include "include/Utilities.h"
 #include <thread>
 #include <chrono>
+#include <numeric>
 
 double TPS;
 bool EXIT, command_received;
 std::vector<std::string> UserDebugInfo, ConsoleDebugInfo;
 int ScreenHeight, ScreenWidth;
 std::vector<double> TPSArray;
+Scene ActualScene;
 
 static double getAverageTPS(int cycles)
 {
@@ -25,7 +26,6 @@ static double getAverageTPS(int cycles)
 
 static Info GetConsoleDebugInfo()
 {
-    static int cycles = 0;
     Info info = Info();
     for (std::string text : ConsoleDebugInfo)
     {
@@ -33,6 +33,7 @@ static Info GetConsoleDebugInfo()
         {
             if (text.contains("_A"))
             {
+                static int cycles = 0;
                 if (command_received) cycles = atoi(strrchr(text.c_str(), '_') + 1);
                 info.push_back(getAverageTPS(cycles));
             }
@@ -42,6 +43,27 @@ static Info GetConsoleDebugInfo()
         {
             std::string text = std::to_string(GetMouseX()) + "|" + std::to_string(GetMouseY());
             info.push_back(text);
+        }
+        if (text.contains("rects"))
+        {
+            for (const auto& scene_item : ActualScene)
+            {
+                for (const auto& item : scene_item.Storage)
+                {
+                    static float thickness = 0;
+                    if (command_received) thickness = atoi(strrchr(text.c_str(), '_') + 1);
+                    if (std::holds_alternative<TextBox>(item))
+                    {
+                        TextBox thatBox = std::get<TextBox>(item);
+                        thatBox.DrawBorders(thickness, WHITE);
+                    }
+                    else if (std::holds_alternative<Button>(item))
+                    {
+                        TextBox thatBox = std::get<Button>(item).Text;
+                        thatBox.DrawBorders(thickness, WHITE);
+                    }
+                }
+            }
         }
     }
     command_received = 0;
@@ -60,8 +82,8 @@ int main(void)
     EXIT = 0, command_received = 0;
     HideConsoleIfNotDebugging();
     InitializeWindow();
-    SceneManager scenemanager;
-    Scene MainMenu = scenemanager.GetMainMenu(), ActualScene;
+    SceneManager *scenemanager = SceneManager::GetInstance();
+    Scene MainMenu = scenemanager->GetMainMenu();
     ActualScene = MainMenu;
 #ifdef _DEBUG
     std::thread console(RunConsoleInParallel);
@@ -74,7 +96,7 @@ int main(void)
         std::chrono::duration<double, std::milli> frameTime = frameEnd - frameStart;
         TPS = 1 / frameTime.count();
         BeginDrawing();
-            ClearBackground(BLACK);
+            ClearBackground(scenemanager->BackGroundColor);
             DrawSceneOnScreen(ActualScene);
             CheckShouldDisplayDebugInfo();
         EndDrawing();

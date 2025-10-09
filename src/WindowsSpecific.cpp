@@ -36,6 +36,12 @@ static void ShowCommand(char* next_token)
 				}
 				else if (modificators[i] == 's') ok = 0;
 			}
+			if (strstr(token, "rects") != NULL)
+			{
+				token = strtok_s(NULL, BASE_DELIMITATOR, &next_token);
+				if (token == NULL) throw "Specify thickness";
+				text = text + "_" + token;
+			}
 		}
 		catch (std::string error) { THROW(error); }
 		for (int i = 0; i < ConsoleDebugInfo.size(); i++)

@@ -69,15 +69,15 @@ void DisplayConsoleDebugInfo(Info info)
 			text = std::to_string(n);
 			text = "TPS:" + text;
 		}
-		if (data == "cursor")
+		else if (data == "cursor")
 		{
 			box_width = MAIN_MENU_BUTTON_WIDTH;
 			text = std::get<std::string>(info[box_count]);
 			text = data + ":" + text;
 		}
 		width = ScreenWidth - box_width;
-		DrawText(text.c_str(), width, (box_count+1) * MAIN_MENU_BUTTON_HEIGHT,
-			DEBUG_TEXT_FONT_SIZE, WHITE);
 		box_count++;
+		DrawText(text.c_str(), width, box_count* MAIN_MENU_BUTTON_HEIGHT,
+			DEBUG_TEXT_FONT_SIZE, WHITE);
 	}
 }
