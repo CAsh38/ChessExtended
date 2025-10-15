@@ -1,5 +1,5 @@
 # ChessExtended
-All information that is parsed from console is managed by a sceond thread that communicates only with main
+All information that is parsed from console is managed by a second thread that communicates only with main function
 Commands for debug console:
 exit - The same as exit button
 show - show debug info on screen
