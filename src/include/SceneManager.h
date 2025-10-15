@@ -1,4 +1,5 @@
 #pragma once
+#include "PlayerManager.h"
 #include "Foundations.h"
 #include "Defines.h"
 #include "Board.h"
@@ -14,6 +15,8 @@ typedef struct SceneWrap
 	std::list <SceneObject> Storage;
 	Rectangle Border{};
 } SceneWrap;
+
+using SceneList = std::list<Scene>;
 
 class SceneManager
 {
@@ -36,6 +39,8 @@ public:
 		return instance;
 	}
 
+	SceneList sceneStack = {};
+
 	Color BackGroundColor = {};
 
 	Scene GetMainMenu()
@@ -57,22 +62,23 @@ public:
 		BackGroundColor = BLACK;
 		return scene;
 	};
-	Scene GetStandardBoardScene()
+	Scene GetStandardBoardScene(Player *user, Player *opp)
 	{
 		StrVector mods = {};
 		std::string wrap = "standard";
-		SceneWrap Container; Scene scene; 
-		ClasicSquareBoard board(8, 8, wrap, mods);
-		Rectangle rect = Rectangle(100, 100, 100, 100), chungus = Rectangle(100, 100, 800, 800);
-		StrColor colors = {}; colors.push_back(BLACK); colors.push_back(WHITE);
-		board.TransformBoard(colors, rect);
+		SceneWrap Container; Scene scene;
+		Rectangle rect = Rectangle(60, 60, 120, 120);
+		ClasicSquareBoard board(8, 8, wrap, mods, user, opp, rect);
+		Rectangle chungus = Rectangle(60, 60, 960, 960);
+		StrColor colors = {}; colors.push_back(CURRANT); colors.push_back(WHITE);
+		board.TransformBoard(colors);
 		Container.Storage.push_back(board);
 		Container.Border = chungus;
 		scene.push_back(Container);
-		BackGroundColor = BEIGE;
+		BackGroundColor = BUTTER_YELLOW;
 		return scene;
 	}
 };	
 
-void DrawSceneOnScreen(Scene scene);
+void DrawSceneOnScreen(Scene& scene);
 void RespondToPlayerInput(Scene scene);

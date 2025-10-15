@@ -31,6 +31,7 @@
     <ClInclude Include="src\include\Managers.h" />
     <ClInclude Include="src\include\Foundations.h" />
     <ClInclude Include="src\include\Pieces.h" />
+    <ClInclude Include="src\include\PlayerManager.h" />
     <ClInclude Include="src\include\SceneManager.h" />
     <ClInclude Include="src\include\WindowsSpecific.h" />
   </ItemGroup>

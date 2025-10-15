@@ -5,6 +5,8 @@
 #include <chrono>
 #include <numeric>
 
+typedef std::chrono::duration<double> seconds;
+
 double TPS;
 bool EXIT, command_received;
 std::vector<std::string> UserDebugInfo, ConsoleDebugInfo;
@@ -83,17 +85,18 @@ int main(void)
     HideConsoleIfNotDebugging();
     InitializeWindow();
     SceneManager *scenemanager = SceneManager::GetInstance();
-    Scene MainMenu = scenemanager->GetMainMenu();
+    const Scene& MainMenu = scenemanager->GetMainMenu();
+    scenemanager->sceneStack.push_back(MainMenu);
     ActualScene = MainMenu;
 #ifdef _DEBUG
     std::thread console(RunConsoleInParallel);
 #endif
     while (!WindowShouldClose() && EXIT == 0)
     {
-        auto frameStart = std::chrono::steady_clock::now();
+        auto frameStart = GET_TIME
         RespondToPlayerInput(ActualScene);
-        auto frameEnd = std::chrono::steady_clock::now();
-        std::chrono::duration<double, std::milli> frameTime = frameEnd - frameStart;
+        auto frameEnd = GET_TIME
+        seconds frameTime = frameEnd - frameStart;
         TPS = 1 / frameTime.count();
         BeginDrawing();
             ClearBackground(scenemanager->BackGroundColor);

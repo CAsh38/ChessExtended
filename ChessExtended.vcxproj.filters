@@ -53,5 +53,8 @@
     <ClInclude Include="src\include\Pieces.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\include\PlayerManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

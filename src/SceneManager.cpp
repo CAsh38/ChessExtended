@@ -1,10 +1,10 @@
 #include "include/SceneManager.h"
 
-
 extern Scene ActualScene;
 SceneManager* SceneManager::instance = nullptr;
+PlayerManager* PlayerManager::instance = nullptr;
 
-void DrawSceneOnScreen(Scene scene)
+void DrawSceneOnScreen(Scene& scene)
 {
 	for (const auto& scene_item : scene)
 	{
@@ -22,8 +22,9 @@ void DrawSceneOnScreen(Scene scene)
 			}
 			else if (std::holds_alternative<ClasicSquareBoard>(item))
 			{
-				ClasicSquareBoard board = std::get<ClasicSquareBoard>(item);
+				const ClasicSquareBoard& board = std::get<ClasicSquareBoard>(item);
 				board.DrawingMethod();
+				board.DrawPiecesMethod();
 			}
 		}
 	}
@@ -74,7 +75,12 @@ int ExitApp()
 
 int PlayTheFuckingGame()
 {
+	PlayerManager* thatPlayerMan = PlayerManager::GetInstance();
+	Player *User = thatPlayerMan->GetStandardPieceSet("WHITE");
+	Player *Opponent = thatPlayerMan->GetStandardPieceSet("BLACK");
 	SceneManager* thatSceneMan = SceneManager::GetInstance();
-	ActualScene = thatSceneMan->GetStandardBoardScene();
+	thatSceneMan->sceneStack.clear();
+	ActualScene = thatSceneMan->GetStandardBoardScene(User, Opponent);
+	thatSceneMan->sceneStack.push_back(ActualScene);
 	return 0;
 }
