@@ -1,8 +1,8 @@
 # ChessExtended
 All information that is parsed from console is managed by a second thread that communicates only with main function
 Commands for debug console:
-exit - The same as exit button
-show - show debug info on screen
+- exit - The same as exit button
+- show - show debug info on screen
   - For show to work, you must add a second keyword, the data that you want to see.
   - Here is the list of options for info: (cursor, TPS, rects)
       - cursor gives the position of cursor in (x|y) within program
